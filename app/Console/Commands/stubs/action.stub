@@ -1,0 +1,21 @@
+<?php
+
+namespace DummyNamespace;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class DummyClass
+{
+    /**
+     * Run the action.
+     *
+     * @param mixed $parameters
+     * @return mixed
+     */
+    public function execute($parameters)
+    {
+        //
+    }
+}

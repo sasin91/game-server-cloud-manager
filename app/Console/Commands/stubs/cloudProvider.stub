@@ -1,0 +1,128 @@
+<?php
+
+namespace DummyNamespace;
+
+use Closure;
+use Exception;
+use GuzzleHttp\Client;
+use App\ServerConfiguration;
+use App\Contracts\CloudProvider as CloudProviderContract;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class DummyClass implements CloudProviderContract
+{
+    /**
+     * HTTP Client configured for DummyClass API
+     *
+     * @var Client
+     */
+    protected $client;
+
+    /**
+     * Create a new instance
+     *
+     * @param string $apiToken
+     */
+    public function __construct($apiToken)
+    {
+        $this->client = new Client([
+            'base_uri' => 'DummyURL',
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => "Bearer {$apiToken}"
+            ]
+        ]);
+    }
+
+    /**
+     * Get the HTTP Client
+     *
+     * @return Client
+     */
+    public function client()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Get all of the valid regions for the provider.
+     *
+     * @return array
+     */
+    public function regions()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Get all of the valid server sizes for the provider.
+     *
+     * @return array
+     */
+    public function sizes()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Whether the cloud is properly authenticated with the provider API
+     *
+     * @return boolean
+     */
+    public function isAuthenticated()
+    {
+        try {
+            $this->request('GET', '/');
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Dispatch a HTTP Request to the providers API
+     *
+     * @param string $method
+     * @param string $uri
+     * @param array $data
+     * @throws \GuzzleHttp\Exception\ClientException
+     * @return array
+     */
+    public function request($method, $uri, $data = [])
+    {
+        $response = $this->client->request($method, $uri, $data);
+
+        return json_decode((string)$response->getBody(), true);
+    }
+
+    /**
+     * Deploy a server on the cloud provider.
+     *
+     * @param Closure|ServerConfiguration $configuration
+     * @param array|string $sshKeys
+     * @return string [The ID of the deployed server]
+     */
+    public function createServer($configuration, $sshKeys)
+    {
+        //
+    }
+
+    /**
+     * Delete a deployed server
+     *
+     * @param string|Deployable $id
+     * @return void
+     */
+    public function deleteServer($id)
+    {
+        //
+    }
+}

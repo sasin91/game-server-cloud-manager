@@ -1,0 +1,104 @@
+<?php
+
+namespace DummyNamespace;
+
+use Closure;
+use Exception;
+use GuzzleHttp\Client;
+use App\ServerConfiguration;
+use App\Contracts\VersionControl as VersionControlContract;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class DummyClass implements VersionControlContract
+{
+    /**
+     * HTTP Client configured for DummyClass API
+     *
+     * @var Client
+     */
+    protected $client;
+
+    /**
+     * Create a new instance
+     *
+     * @param string $apiToken
+     */
+    public function __construct($apiToken)
+    {
+        $this->client = new Client([
+            'base_uri' => 'DummyURL',
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => "Bearer {$apiToken}"
+            ]
+        ]);
+    }
+
+    /**
+     * Get the HTTP Client
+     *
+     * @return Client
+     */
+    public function client()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Whether the cloud is properly authenticated with the provider API
+     *
+     * @return boolean
+     */
+    public function isAuthenticated()
+    {
+        try {
+            $this->request('GET', '/');
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Dispatch a HTTP Request to the providers API
+     *
+     * @param string $method
+     * @param string $uri
+     * @param array $data
+     * @throws \GuzzleHttp\Exception\ClientException
+     * @return array
+     */
+    public function request($method, $uri, $data = [])
+    {
+        $response = $this->client->request($method, $uri, $data);
+
+        return json_decode((string)$response->getBody(), true);
+    }
+
+    /**
+     * Clone the given repository
+     *
+     * @param string $repository
+     * @param string $hash
+     * @return string
+     */
+    public function tarballUrl($repository, $hash = null)
+    {
+        //
+    }
+
+    /**
+     * Get the latest hash for the repository
+     *
+     * @param string $repository
+     * @return string
+     */
+    public function latestHash($repository)
+    {
+        //
+    }
+}
