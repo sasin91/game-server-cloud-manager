@@ -2,13 +2,15 @@
 
 namespace Tests\Unit\Jobs;
 
+use Mockery;
 use App\Cloud;
-use App\Jobs\DeleteServerInCloud;
 use App\Server;
 use Tests\TestCase;
+use Mockery\MockInterface;
+use App\Jobs\DeleteServerInCloud;
+use App\CloudProviders\DigitalOcean;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery\MockInterface;
 
 class DeleteServerInCloudTest extends TestCase
 {
@@ -16,10 +18,12 @@ class DeleteServerInCloudTest extends TestCase
 
     public function test_the_job_sends_a_delete_request_to_the_cloud_provider()
     {
-        $this->markTestSkipped("The mock is properly resolved in the test but not in the job despite being called directly?...");
+        $this->app->bind(DigitalOcean::class, function ($app) {
+            $mock = Mockery::mock(DigitalOcean::class);
+            $mock->shouldDeferMissing();
+            $mock->expects('deleteServer')->with('1234abc');
 
-        $this->mock('DigitalOcean', function (MockInterface $mock) {
-            $mock->expects('deleteServer')->with('1234abc')->andReturnNull();
+            return $mock;
         });
 
         $cloud = factory(Cloud::class)->create(['provider' => 'DigitalOcean']);

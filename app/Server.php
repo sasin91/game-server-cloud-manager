@@ -65,6 +65,6 @@ class Server extends Model
      */
     public function keyPairs()
     {
-        return $this->belongsToMany(KeyPair::class)->using(ServerKeyPair::class);
+        return $this->morphMany(KeyPair::class, 'owner');
     }
 }

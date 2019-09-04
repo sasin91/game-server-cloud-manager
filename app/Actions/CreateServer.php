@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Cloud;
 use App\Server;
 use App\Environment;
+use App\Jobs\CreateServerInCloud;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,6 +40,8 @@ class CreateServer
             $parameters + ['environment_id' => $environment->getKey()]
         ), function (Server $server) use ($environment) {
             $server->environment()->associate($environment);
+
+            dispatch(new CreateServerInCloud($server));
         });
     }
 }

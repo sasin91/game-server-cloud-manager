@@ -15,6 +15,7 @@ use App\Actions\AddTeamMember;
 use App\Events\ServerCreated;
 use App\Events\ServerDeleted;
 use App\Events\ServerUpdated;
+use App\Jobs\CreateServerInCloud;
 use App\Jobs\DeleteServerInCloud;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Bus;
@@ -152,6 +153,8 @@ class ServerTest extends TestCase
 
     public function test_cannot_create_a_server_in_another_cloud()
     {
+        $this->doesntExpectJobs(CreateServerInCloud::class);
+
         $this->doesntExpectEvents(ServerCreated::class);
         Model::setEventDispatcher($this->app['events']);
 
@@ -198,6 +201,8 @@ class ServerTest extends TestCase
 
     public function test_team_owner_can_create_a_server_in_the_team_cloud()
     {
+        $this->expectsJobs(CreateServerInCloud::class);
+
         $this->expectsEvents(ServerCreated::class);
         Model::setEventDispatcher($this->app['events']);
 
@@ -216,6 +221,8 @@ class ServerTest extends TestCase
 
     public function test_team_member_with_permission_to_create_can_create_a_server_in_the_team_cloud()
     {
+        $this->expectsJobs(CreateServerInCloud::class);
+
         $this->expectsEvents(ServerCreated::class);
         Model::setEventDispatcher($this->app['events']);
 
@@ -241,6 +248,8 @@ class ServerTest extends TestCase
 
     public function test_team_member_without_the_permission_cannot_create_a_server()
     {
+        $this->doesntExpectJobs(CreateServerInCloud::class);
+
         $this->doesntExpectEvents(ServerCreated::class);
         Model::setEventDispatcher($this->app['events']);
 
