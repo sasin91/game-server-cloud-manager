@@ -32,16 +32,6 @@ class KeyPair extends Model
     }
 
     /**
-     * The servers this keypair is used at
-     *
-     * @return BelongsToMany
-     */
-    public function servers()
-    {
-        return $this->belongsToMany(Server::class)->using(ServerKeyPair::class);
-    }
-
-    /**
      * Set the public key
      *
      * @param string $value
