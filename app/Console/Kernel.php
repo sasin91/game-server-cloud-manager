@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\ActionMakeCommand;
 use App\Console\Commands\CloudProviderMakeCommand;
+use App\Console\Commands\ScriptMakeCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,7 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ActionMakeCommand::class,
-        CloudProviderMakeCommand::class
+        CloudProviderMakeCommand::class,
+        ScriptMakeCommand::class
     ];
 
     /**

@@ -1,0 +1,32 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Support\Str;
+
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
+class DummyClass
+{
+    /**
+     * Get the timeout for the script.
+     *
+     * @return int|null
+     */
+    public function timeout()
+    {
+        return 3600;
+    }
+
+    /**
+     * Get the contents of the script.
+     *
+     * @return string
+     */
+    public function script()
+    {
+        return view('DummyView');
+    }
+}
