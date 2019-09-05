@@ -9,6 +9,7 @@ use App\Events\ServerRestored;
 use App\Events\ServerRestoring;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -66,5 +67,15 @@ class Server extends Model
     public function keyPairs()
     {
         return $this->morphMany(KeyPair::class, 'owner');
+    }
+
+    /**
+     * The deployments on this server
+     *
+     * @return HasMany
+     */
+    public function deployments()
+    {
+        return $this->hasMany(Deployment::class);
     }
 }
