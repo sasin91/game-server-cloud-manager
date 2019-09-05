@@ -60,7 +60,9 @@ class VersionControlMakeCommand extends GeneratorCommand
     {
         $stub = parent::buildClass($name);
 
-        return $this->replaceURL($stub, ($this->option('url') || 'https://api.example.com/'));
+        $this->replaceURL($stub, ($this->option('url') || 'https://api.example.com/'));
+
+        return $stub;
     }
 
     /**
