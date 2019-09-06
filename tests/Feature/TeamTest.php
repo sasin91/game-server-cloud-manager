@@ -22,6 +22,17 @@ class TeamTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_it_lists_the_servers_in_team_clouds()
+    {
+        $team = factory(Team::class)->create();
+        $cloud = factory(Cloud::class)->create(['team_id' => $team->id]);
+        $server = factory(Server::class)->create(['cloud_id' => $cloud->id]);
+
+        $this->assertTrue(
+            $team->servers->contains($server)
+        );
+    }
+
     public function test_a_newly_created_team_has_the_current_user_as_owner_by_default()
     {
         $this->expectsEvents(TeamCreated::class);

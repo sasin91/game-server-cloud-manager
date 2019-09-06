@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\CloudProvider;
 use App\CloudProviders\DigitalOcean;
+use App\Script;
 use App\VersionControl;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         CloudProvider::register($this->app);
         VersionControl::register($this->app);
+        Script::register($this->app);
     }
 
     /**

@@ -2,31 +2,22 @@
 
 namespace DummyNamespace;
 
+use App\Contracts\Script;
 use Illuminate\Support\Str;
 
 /**
  * Class DummyClass
  * @package DummyNamespace
  */
-class DummyClass
+class DummyClass implements Script
 {
-    /**
-     * Get the timeout for the script.
-     *
-     * @return int|null
-     */
-    public function timeout()
-    {
-        return 3600;
-    }
-
     /**
      * Get the contents of the script.
      *
      * @return string
      */
-    public function script()
+    public function render()
     {
-        return view('DummyView');
+        return view('DummyView')->render();
     }
 }
