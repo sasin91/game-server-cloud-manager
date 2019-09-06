@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CloudController;
+use App\Http\Controllers\DeploymentController;
+use App\Http\Controllers\ServerDeploymentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\TeamController;
@@ -76,4 +78,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::apiResource('projects', ProjectController::class);
     Route::post('projects/{project}/restore', [ProjectController::class, 'restore'])
         ->name('projects.restore');
+
+    Route::apiResource('server.deployments', ServerDeploymentController::class);
 });

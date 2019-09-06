@@ -77,6 +77,11 @@ class Team extends Model
         return $this->hasMany(Cloud::class);
     }
 
+    public function servers()
+    {
+        return $this->hasManyThrough(Server::class, Cloud::class);
+    }
+
     /**
      * Whether any of this teams clouds has the given server
      *

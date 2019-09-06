@@ -9,6 +9,8 @@ use App\Events\DeploymentDeleted;
 use App\Events\DeploymentUpdated;
 use App\Events\DeploymentExecuted;
 use App\Events\DeploymentExecuting;
+use App\Events\DeploymentFailed;
+use App\Events\DeploymentSuccessful;
 use Symfony\Component\Process\Process;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +21,7 @@ class Deployment extends Model
         'server_id',
         'project_id',
         'script',
+        'status',
         'exitcode',
         'output'
     ];
@@ -28,7 +31,9 @@ class Deployment extends Model
         'updated' => DeploymentUpdated::class,
         'deleted' => DeploymentDeleted::class,
         'executing' => DeploymentExecuting::class,
-        'executed' => DeploymentExecuted::class
+        'executed' => DeploymentExecuted::class,
+        'failed' => DeploymentFailed::class,
+        'success' => DeploymentSuccessful::class
     ];
 
     /**
@@ -91,6 +96,10 @@ class Deployment extends Model
             $process->getExitCode()
         );
 
+        $this->emitStatusEvent(
+            $process->getExitCode()
+        );
+
         $this->fireModelEvent('executed');
 
         return $this;
@@ -109,5 +118,20 @@ class Deployment extends Model
             'exitcode' => $exitcode,
             'output' => $output
         ]);
+    }
+
+    /**
+     * Emit the status event for failure or success
+     *
+     * @param integer $exitcode
+     * @return void
+     */
+    protected function emitStatusEvent(int $exitcode)
+    {
+        if ($exitcode === 0) {
+            $this->fireModelEvent('success');
+        } else {
+            $this->fireModelEvent('failed');
+        }
     }
 }

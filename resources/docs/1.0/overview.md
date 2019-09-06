@@ -31,7 +31,7 @@ User
 Cloud ( team_id, environment_id, provider, private_network, address ) : events [created,updated,deleted]
     - Servers ( environment_id, cloud_id, status, image, private_address, public_address ) : events [created,updated,deleted]
         - Jobs: CreateServerInCloud, DeleteServerInCloud
-        - Deployments ( server_id, project_id, script, exitcode, output ) : events [created,updated,deleted,executing,executed]
+        - Deployments ( server_id, project_id, script, status, exitcode, output ) : events [created,updated,deleted,executing,executed,failed,successful]
             - Realms ( server_id, deployment_id, name, url, status, meta:json( wow_expansion, build ) ) : events [created,updated,deleted]
 
 <a name="example"></a>

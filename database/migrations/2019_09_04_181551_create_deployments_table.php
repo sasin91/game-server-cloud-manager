@@ -19,8 +19,9 @@ class CreateDeploymentsTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects');
             $table->string('script');
-            $table->integer('exitcode');
-            $table->text('output');
+            $table->string('status')->nullable();
+            $table->integer('exitcode')->nullable();
+            $table->text('output')->nullable();
             $table->timestamps();
         });
     }
