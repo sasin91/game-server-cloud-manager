@@ -35,6 +35,10 @@ class ScriptMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
+        if ($this->option('ansible')) {
+            return __DIR__.'/stubs/script.ansible.stub';
+        }
+
         return __DIR__.'/stubs/script.stub';
     }
 
@@ -88,6 +92,7 @@ class ScriptMakeCommand extends GeneratorCommand
     {
         return [
             ['view', null, InputOption::VALUE_OPTIONAL, 'The View path for the script'],
+            ['ansible', 'a', InputOption::VALUE_NONE, 'Whether the script represents a Ansible configuration']
         ];
     }
 }

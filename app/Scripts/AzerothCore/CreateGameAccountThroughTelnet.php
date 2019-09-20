@@ -2,9 +2,9 @@
 
 namespace App\Scripts\AzerothCore;
 
-use App\Contracts\Script;
+use App\Contracts\ShellScript;
 
-class CreateGameAccountThroughTelnet implements Script
+class CreateGameAccountThroughTelnet implements ShellScript
 {
     /**
      * The user that the script should be run as.

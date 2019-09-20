@@ -2,13 +2,13 @@
 
 namespace App\Scripts\AzerothCore;
 
-use App\Contracts\Script;
+use App\Contracts\AnsibleScript;
 
 /**
  * Class DeployAzerothCoreUsingDocker
  * @package App\Scripts
  */
-class DeployAzerothCoreUsingDocker implements Script
+class DeployAzerothCoreUsingDocker implements AnsibleScript
 {
     /**
      * The user that the script should be run as.

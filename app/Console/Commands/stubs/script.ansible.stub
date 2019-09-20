@@ -2,13 +2,13 @@
 
 namespace DummyNamespace;
 
-use App\Contracts\ShellScript;
+use App\Contracts\AnsibleScript;
 
 /**
  * Class DummyClass
  * @package DummyNamespace
  */
-class DummyClass implements ShellScript
+class DummyClass implements AnsibleScript
 {
     /**
      * Get the contents of the script.
